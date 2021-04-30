@@ -1,0 +1,36 @@
+.grid {
+    height: 560px;
+    width: 560px;
+    display: flex;
+    float: left;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: 100px;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+}
+
+.grid div {
+    height: 70px;
+    width: 70px;
+}
+
+.body {
+    align-items: center;
+    text-align: center; 
+}
+
+.score-board {
+    border-radius: 10px;
+    height: 150px;
+    width: 100px;
+    margin: 200px;
+    display: flex;
+    float: left;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) inset, 0 1px 0 #fff;
+  }
