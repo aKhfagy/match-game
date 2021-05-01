@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     const scoreDisplay = document.getElementById('score');
+    const timeDisplay = document.getElementById('time');
     const width = 8;
     const squares = [];
     let score = 0;
@@ -29,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     createBoard();
-    console.log(squares.length)
     
     // drag the candies
     let colorBeingDraged = null, colorBeingReplaced = null;
@@ -61,22 +61,18 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
             squares[squareIdBeingDraged].style.backgroundColor = colorBeingDraged;
         }
-
-        console.log(this.id, 'dragend');
     }
 
     function dragOver(e) {
         e.preventDefault();
-        console.log(this.id, 'dragover');
     }
 
     function dragEnter(e) {
         e.preventDefault();
-        console.log(this.id, 'dragenter');
     }
 
     function dragLeave(e) {
-        console.log(this.id, 'dragleave');
+        
     }
 
     function dragDrop(e) {
@@ -107,21 +103,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function moveDown() {
         const firstRow = [0, 1, 2, 3, 4, 5, 6, 7];
-        let hadWhite = false;
         for(let i = 0; i < 56; ++i) {
             if(squares[i + width].style.backgroundColor === '') {
-                hadWhite = true;
                 squares[i + width].style.backgroundColor = squares[i].style.backgroundColor;
                 squares[i].style.backgroundColor = '';
             }
             const isFirstRow = firstRow.includes(i);
             if(isFirstRow && squares[i].style.backgroundColor === '') {
-                hadWhite = true;
                 let randomColor = Math.floor(Math.random() * candyColors.length);
                 squares[i].style.backgroundColor = candyColors[randomColor];
             }
         }
-        return hadWhite;
     }
 
     // Check for matches
@@ -139,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 rowOfThree.every(
                     index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
                         updateScore(3);
+                        console.log("found 3 in row", i, i + 1, i + 2, "with color", decidedColor);
                         rowOfThree.forEach(
                             index => {
                                 squares[index].style.backgroundColor = '';
@@ -156,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 colOfThree.every(
                     index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
                         updateScore(3);
+                        console.log("found 3 in col", i, i + width, i + width*2, "with color", decidedColor);
                         colOfThree.forEach(
                             index => {
                                 squares[index].style.backgroundColor = '';
@@ -168,11 +162,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkMatches() {
         checkRowForThree();
         checkColForThree();
-        while(moveDown());
+        moveDown();
     }
+
+    const startDate = new Date().getTime();
 
     window.setInterval(function() {
         checkMatches();
     }, 100);
+
+    window.setInterval(function() {
+        const now = new Date().getTime();
+        let ellapsed = now - startDate;
+        let minutes = Math.floor((ellapsed % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((ellapsed % (1000 * 60)) / 1000);
+        timeDisplay.innerHTML = minutes + ':' + seconds;
+    }, 1000);
 
 });
