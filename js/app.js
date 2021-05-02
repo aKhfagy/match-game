@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const squares = [];
     let score = 0;
     scoreDisplay.innerHTML = score;
-    
+
     const candyColors = [
         'red',
         'yellow',
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // create board
     const createBoard = () => {
-        for (let i = 0; i < width*width; ++i) {
+        for (let i = 0; i < width * width; ++i) {
             const square = document.createElement('div');
             let randomColor = Math.floor(Math.random() * candyColors.length);
             square.setAttribute('draggable', true);
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     createBoard();
-    
+
     // drag the candies
     let colorBeingDraged = null, colorBeingReplaced = null;
     let squareIdBeingDraged = null, squareIdBeingReplaced = null;
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function dragEnd(e) {
         let validMoves = [
-            squareIdBeingDraged - 1, 
+            squareIdBeingDraged - 1,
             squareIdBeingDraged - width,
             squareIdBeingDraged + 1,
             squareIdBeingDraged + width
@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let validMove = validMoves.includes(squareIdBeingReplaced);
 
-        if(squareIdBeingReplaced && validMove) {
+        if (squareIdBeingReplaced && validMove) {
             squareIdBeingReplaced = null;
         }
-        else if(squareIdBeingReplaced && !validMove) {
+        else if (squareIdBeingReplaced && !validMove) {
             squares[squareIdBeingReplaced].style.backgroundColor = colorBeingReplaced;
             squares[squareIdBeingDraged].style.backgroundColor = colorBeingDraged;
         }
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function dragLeave(e) {
-        
+
     }
 
     function dragDrop(e) {
@@ -103,13 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function moveDown() {
         const firstRow = [0, 1, 2, 3, 4, 5, 6, 7];
-        for(let i = 0; i < 56; ++i) {
-            if(squares[i + width].style.backgroundColor === '') {
+        for (let i = 0; i < 56; ++i) {
+            if (squares[i + width].style.backgroundColor === '') {
                 squares[i + width].style.backgroundColor = squares[i].style.backgroundColor;
                 squares[i].style.backgroundColor = '';
             }
             const isFirstRow = firstRow.includes(i);
-            if(isFirstRow && squares[i].style.backgroundColor === '') {
+            if (isFirstRow && squares[i].style.backgroundColor === '') {
                 let randomColor = Math.floor(Math.random() * candyColors.length);
                 squares[i].style.backgroundColor = candyColors[randomColor];
             }
@@ -118,43 +118,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check for matches
     function checkRowForThree() {
-        for(let i = 0; i < 62; ++i) {
+        for (let i = 0; i < 62; ++i) {
             let rowOfThree = [i, i + 1, i + 2];
             let decidedColor = squares[i].style.backgroundColor;
             const isBlank = squares[i].style.backgroundColor === '';
             const notValid = [6, 7, 14, 15, 22, 23, 30, 31, 38, 38, 46, 47, 54, 55];
 
-            if(notValid.includes(i))
+            if (notValid.includes(i))
                 continue;
 
-            if(
+            if (
                 rowOfThree.every(
                     index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
-                        updateScore(3);
-                        console.log("found 3 in row", i, i + 1, i + 2, "with color", decidedColor);
-                        rowOfThree.forEach(
-                            index => {
-                                squares[index].style.backgroundColor = '';
-                            }
-                        );
+                updateScore(3);
+                console.log("found 3 in row", i, i + 1, i + 2, "with color", decidedColor);
+                rowOfThree.forEach(
+                    index => {
+                        squares[index].style.backgroundColor = '';
+                    }
+                );
             }
         }
     }
     function checkColForThree() {
-        for(let i = 0; i < 48; ++i) {
+        for (let i = 0; i < 48; ++i) {
             let colOfThree = [i, i + width, i + width * 2];
             let decidedColor = squares[i].style.backgroundColor;
             const isBlank = squares[i].style.backgroundColor === '';
-            if(
+            if (
                 colOfThree.every(
                     index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
-                        updateScore(3);
-                        console.log("found 3 in col", i, i + width, i + width*2, "with color", decidedColor);
-                        colOfThree.forEach(
-                            index => {
-                                squares[index].style.backgroundColor = '';
-                            }
-                        );
+                updateScore(3);
+                console.log("found 3 in col", i, i + width, i + width * 2, "with color", decidedColor);
+                colOfThree.forEach(
+                    index => {
+                        squares[index].style.backgroundColor = '';
+                    }
+                );
             }
         }
     }
@@ -167,11 +167,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const startDate = new Date().getTime();
 
-    window.setInterval(function() {
+    window.setInterval(function () {
         checkMatches();
     }, 100);
 
-    window.setInterval(function() {
+    window.setInterval(function () {
         const now = new Date().getTime();
         let ellapsed = now - startDate;
         let minutes = Math.floor((ellapsed % (1000 * 60 * 60)) / (1000 * 60));
