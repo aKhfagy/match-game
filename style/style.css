@@ -1,6 +1,6 @@
 .grid {
-    height: 560px;
-    width: 560px;
+    height: 40vw;
+    width: 40vw;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -13,8 +13,8 @@
 }
 
 .grid div {
-    height: 70px;
-    width: 70px;
+    height: 5vw;
+    width: 5vw;
 }
 
 footer {
