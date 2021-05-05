@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
         'blue'
     ];
 
+    function isTouchDevice(){
+        return typeof window.ontouchstart !== 'undefined';
+    }
+    
+    
     // create board
     const createBoard = () => {
         for (let i = 0; i < width * width; ++i) {
@@ -28,7 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
             squares.push(square);
         }
     };
-
+    
+    if(isTouchDevice()) {
+        alert("Unfortunately no touch support is available yet");
+    }
+    
     createBoard();
 
     // drag the candies
@@ -38,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function dragStart(e) {
         squareIdBeingDraged = parseInt(this.id);
         colorBeingDraged = this.style.backgroundColor;
-        console.log(this.id, 'dragstart', colorBeingDraged);
     }
 
     function dragEnd(e) {
@@ -80,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         squareIdBeingReplaced = parseInt(this.id);
         this.style.backgroundColor = colorBeingDraged;
         squares[squareIdBeingDraged].style.backgroundColor = colorBeingReplaced;
-        console.log(this.id, 'drop', colorBeingReplaced, colorBeingDraged);
     }
 
     const loopEach = (items, e, callback) => {
@@ -131,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 rowOfThree.every(
                     index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
                 updateScore(3);
-                console.log("found 3 in row", i, i + 1, i + 2, "with color", decidedColor);
+                //console.log("found 3 in row", i, i + 1, i + 2, "with color", decidedColor);
                 rowOfThree.forEach(
                     index => {
                         squares[index].style.backgroundColor = '';
@@ -149,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 colOfThree.every(
                     index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
                 updateScore(3);
-                console.log("found 3 in col", i, i + width, i + width * 2, "with color", decidedColor);
+                //console.log("found 3 in col", i, i + width, i + width * 2, "with color", decidedColor);
                 colOfThree.forEach(
                     index => {
                         squares[index].style.backgroundColor = '';
