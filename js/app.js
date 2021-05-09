@@ -8,12 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     scoreDisplay.innerHTML = score;
 
     const candyColors = [
-        'red',
-        'yellow',
-        'orange',
-        'purple',
-        'green',
-        'blue'
+        '#0c5274',
+        '#2ddd31',
+        '#bc9d7e',
+        '#0e3875',
+        '#3ea6d2'
     ];
 
     function isTouchDevice(){
